@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: api-gateway
+
+  ##GATEWAY CONFIGURATIONS
+
+  cloud:
+    gateway:
+      routes:
+        ## service1
+        - id: avion
+          uri: lb://avion
+          predicates:
+            - Path=/avion/**
+          filters:
+            - StripPrefix=1
+
+        ## Service2
+        - id: usermicroservice
+          uri: lb://usermicroservice
+          predicates:
+            - Path=/usermicroservice/**
+          filters:
+            - StripPrefix=1
+server:
+  port: 8089
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
